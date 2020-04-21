@@ -82,8 +82,8 @@ echo the os is $(lsb_release -a 2>/dev/null) >> $logfile
 OS=$(lsb_release -a 2>/dev/null | grep name: | awk '{print $2}')
 # Check the Raspberry Pi version.
 if [ "$ARM" != "armv7l" ]; then
-  read -p "this appears not to be a Raspberry Pi 2 or 3, do you want to continue installation (y/N)?" choice
-	choice="${choice:-N}"
+  #read -p "this appears not to be a Raspberry Pi 2 or 3, do you want to continue installation (y/N)?" choice
+	choice="N"
 	if [[ $choice =~ ^[Nn]$ ]]; then
 	  echo user stopped install on $ARM hardware  >>$logfile
 		echo -e "\e[91mSorry, your Raspberry Pi is not supported."
@@ -137,7 +137,7 @@ if [ $mac != 'Darwin' ]; then
 
 	# Installing helper tools
 	echo -e "\e[96mInstalling helper tools ...\e[90m" | tee -a $logfile
-	sudo apt-get --assume-yes install curl wget git build-essential unzip  >>$logfile
+	sudo apt-get --assume-yes install curl wget git build-essential unzip unclutter  >>$logfile
 fi
 
 # Check if we need to install or upgrade Node.js.
@@ -391,8 +391,8 @@ else
 fi
 
 # Use pm2 control like a service MagicMirror
-read -p "Do you want use pm2 for auto starting of your MagicMirror (y/N)?" choice
-choice="${choice:-N}"
+#read -p "Do you want use pm2 for auto starting of your MagicMirror (y/N)?" choice
+choice="y"
 if [[ $choice =~ ^[Yy]$ ]]; then
       echo install and setup pm2 | tee -a $logfile
  			# assume pm2 will be found on the path
@@ -522,8 +522,8 @@ if [[ $choice =~ ^[Yy]$ ]]; then
 fi
 # Disable Screensaver
 
-read -p "Do you want to disable the screen saver? (y/N)?" choice
-choice="${choice:-Y}"
+#read -p "Do you want to disable the screen saver? (y/N)?" choice
+choice="Y"
 if [[ $choice =~ ^[Yy]$ ]]; then
   # if this is a mac
 	if [ $mac == 'Darwin' ]; then
