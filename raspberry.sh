@@ -639,3 +639,15 @@ echo " "
 echo " "
 
 date +"install completed - %a %b %e %H:%M:%S %Z %Y" >>$logfile
+
+
+echo "Installing display script"
+
+wget -O /home/pi/display.py https://github.com/leevanrell/MagicMirror_scripts/raw/master/display.py
+chmod +x /home/pi/display.py
+
+crontab -l > mcron 
+echo "0 6 * * * /home/pi/scrip.py turnon" >> mcron
+echo "0 21 * * * /home/pi/scrip.py turnoff" >> mcron
+crontab mcron 
+rm mcron 

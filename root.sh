@@ -1,10 +1,21 @@
 #!/bin/bash
 
-if [ $USER != 'root' ]; then
-	 echo Please login as a root to execute the MagicMirror installation,  not $USER
-	 exit 1
-fi
+apt update -y && apt upgrade -y
 
+#https://askubuntu.com/questions/868750/installing-gnome-desktop-lightdm-without-selecting
+DEBIAN_FRONTEND=noninteractive apt install xinit xserver-xorg lxde-core lightdm git libxss1 libnss3 unclutter chromium-browser
+echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
+echo "set shared/default-x-display-manager lightdm" | debconf-communicate
+
+#change hostname
+NEW_NAME="Mirror"
+echo $NEW_NAME > /etc/hostname
+sed -i "s/raspberrypi/$NEW_NAME/g" /etc/hosts
+hostname $NEW_NAME
+
+#TODO: desktop-> desktop-autologin https://github.com/MichMich/MagicMirror/wiki/jessie-lite-installation-guide
+
+#setup screen
 echo "@xset s off" >> /etc/xdg/lxsession/LXDE-pi/autostart
 echo "@xset -dpms" >> /etc/xdg/lxsession/LXDE-pi/autostart
 echo "@xset s noblank" >> /etc/xdg/lxsession/LXDE-pi/autostart

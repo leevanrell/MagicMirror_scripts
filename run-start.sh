@@ -1,5 +1,5 @@
 #!/bin/bash 
-  # use bash instead of sh
+# use bash instead of sh
 [ -f ./untrack-css.sh ] && ./untrack-css.sh
 
 if grep docker /proc/1/cgroup -qa; then
